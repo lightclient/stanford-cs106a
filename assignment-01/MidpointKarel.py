@@ -15,12 +15,42 @@ assume that it is at least as tall as it is wide.
 
 def main():
     """
-    You should write your code to make Karel do its task in
-    this function. Make sure to delete the 'pass' line before
-    starting to write your own code. You should also delete this
-    comment and replace it with a better, more descriptive one.
+    Find the midpoint of the world. 
+
+    The strategy here is to have two markers on either end of the world and 
+    slowly move them closer to the center. Karel will know that the midpoint
+    has been found when they place a marker adjacent to the other marker.
     """
-    pass
+    put_beeper()
+
+    # in the case of  a 1 x 1 world, karel should simply flip upside down as
+    # midpoint is also equal to the starting position
+    if front_is_blocked():
+        turn_around()
+    else:
+        while front_is_clear():
+            move()
+
+        turn_around()
+
+        while no_beepers_present():
+            put_beeper()
+            move()
+
+            while no_beepers_present():
+                move()
+
+            pick_beeper()
+            turn_around()
+            move()
+
+        if facing_east():
+            turn_around()
+
+
+def turn_around():
+    for _ in range(2):
+        turn_left()
 
 
 # There is no need to edit code beyond this point
