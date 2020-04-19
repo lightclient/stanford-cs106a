@@ -17,36 +17,44 @@ def main():
     """
     Find the midpoint of the world. 
 
-    The strategy here is to have two markers on either end of the world and 
-    slowly move them closer to the center. Karel will know that the midpoint
-    has been found when they place a marker adjacent to the other marker.
+    Since there is no way to count the number of moves Karel makes, Karel uses
+    y-axis to record how far they've moved. Karel starts the world moving
+    forward one and up one until they reach the far East wall. Karel then turns
+    around and move forward one and down two. This is equivalent to counting
+    the number of spaces in the world and dividing by two.
     """
+    
+    while front_is_clear():
+        move_forward_and_up()
+
+    turn_right()
+
+    while front_is_clear():
+        move_forward_and_down_two()
+
+    turn_right()
     put_beeper()
 
-    # in the case of  a 1 x 1 world, karel should simply flip upside down as
-    # midpoint is also equal to the starting position
-    if front_is_blocked():
-        turn_around()
-    else:
-        while front_is_clear():
-            move()
 
-        turn_around()
+def move_forward_and_up():
+    move()
+    turn_left()
+    move()
+    turn_right()
 
-        while no_beepers_present():
-            put_beeper()
-            move()
+def move_forward_and_down_two():
+    turn_right()
+    move()
+    turn_left()
+    move()
 
-            while no_beepers_present():
-                move()
+    if front_is_clear():
+        move()
 
-            pick_beeper()
-            turn_around()
-            move()
 
-        if facing_east():
-            turn_around()
-
+def turn_right():
+    for _ in range(3):
+        turn_left()
 
 def turn_around():
     for _ in range(2):
