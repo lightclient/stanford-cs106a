@@ -8,10 +8,11 @@ INIT_STONES = 20
 
 def main():
     stones = INIT_STONES
+    player = 0
 
     while 0 < stones:
-        stones = execute_player_turn(1, stones)
-        stones = execute_player_turn(2, stones)
+        stones = execute_player_turn(player % 2 + 1, stones)
+        player += 1
 
 
 def execute_player_turn(player, stones):
