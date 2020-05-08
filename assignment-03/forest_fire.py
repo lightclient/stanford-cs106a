@@ -24,13 +24,23 @@ def find_flames(filename):
     in order to highlight areas of wildfires.
     """
     image = SimpleImage(filename)
-    # TODO: your code here
+
+    for pixel in image:
+        avg = (pixel.red + pixel.green + pixel.blue) / 3
+        if avg < pixel.red:
+            pixel.red = 255
+            pixel.green = 0
+            pixel.blue = 0
+        else:
+            pixel.red = avg
+            pixel.green = avg
+            pixel.blue = avg
+
     return image
 
 def main():
     # Get file and load image
     filename = get_file()
-    image = SimpleImage(filename)
 
     # Show the original fire
     original_fire = SimpleImage(filename)
